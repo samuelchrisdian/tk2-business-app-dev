@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+public class KonversiBiner{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input angka biner
+        System.out.print("Input angka biner (maksimal 8 digit): ");
+        String biner = scanner.nextLine();
+
+        // Cek panjang angka biner
+        if (biner.length() > 8) {
+            System.out.println("Digit kelebihan. Masukkan angka biner maksimal 8 digit.");
+            return;
+        }
+
+        // Konversi angka biner ke desimal
+        int desimal = binerToDesimal(biner);
+
+        // Output hasil
+        System.out.println("Angka desimal dari biner " + biner + " adalah: " + desimal);
+
+        scanner.close();
+    }
+
+    // Method untuk mengonversi angka biner ke desimal
+    private static int binerToDesimal(String biner) {
+        int desimal = 0;
+        int panjang = biner.length();
+
+        for (int i = 0; i < panjang; i++) {
+            char digit = biner.charAt(i);
+            if (digit == '1') {
+                desimal += Math.pow(2, panjang - 1 - i);
+            } else if (digit != '0') {
+                System.out.println("Input tidak valid. Harap masukkan angka biner yang valid.");
+                System.exit(0);
+            }
+        }
+
+        return desimal;
+    }
+}

@@ -1,0 +1,71 @@
+import java.time.LocalDate;
+import java.util.Scanner;
+
+public class LamaranPekerjaan {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input tahun lahir pelamar
+        int yearOfBirth;
+        do {
+            System.out.print("Masukkan tahun lahir anda (yyyy): ");
+            while (!scanner.hasNextInt()) {
+                System.out.print("Input tidak valid. Mohon masukkan tahun lahir yang valid (yyyy): ");
+                scanner.next(); // clear buffer
+            }
+            yearOfBirth = scanner.nextInt();
+        } while (yearOfBirth <= 0 || yearOfBirth > LocalDate.now().getYear());
+
+        // Hitung umur pelamar
+        int currentYear = LocalDate.now().getYear();
+        int age = currentYear - yearOfBirth;
+        
+        System.out.println(age);
+
+        // Input posisi pelamar
+        String posisi;
+        boolean posisiValid;
+        do {
+            System.out.print("Masukkan posisi yang ingin anda lamar (Staff/Officer/Supervisor/Manager): ");
+            posisi = scanner.next().toLowerCase();
+            posisiValid = isPosisiValid(posisi);
+            if (!posisiValid) {
+                System.out.println("Posisi tidak valid. Harap masukkan posisi yang benar.");
+            }
+        } while (!posisiValid);
+
+        // Tentukan batas umur
+        int batasUmur = getBatasUmur(posisi);
+        System.out.println(batasUmur);
+
+        // Pengecekan umur
+        if (age <= batasUmur) {
+            System.out.println("Selamat, Anda memenuhi kriteria umur untuk posisi " + posisi);
+        } else {
+            System.out.println("Maaf, umur Anda melebihi batas untuk posisi " + posisi);
+        }
+
+        scanner.close();
+    }
+
+    // Method untuk memeriksa kevalidan posisi
+    private static boolean isPosisiValid(String posisi) {
+        return posisi.equals("staff") || posisi.equals("officer") || posisi.equals("supervisor") || posisi.equals("manager");
+    }
+
+    // Method untuk mendapatkan batas umur berdasarkan posisi
+    private static int getBatasUmur(String posisi) {
+        switch (posisi) {
+            case "staff":
+                return 25;
+            case "officer":
+                return 30;
+            case "supervisor":
+                return 35;
+            case "manager":
+                return 40;
+            default:
+                return 0; // Default, sebaiknya tidak terjadi
+        }
+    }
+}

@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class LamaranPekerjaan {
+	public static void main(String[] args) {
+		// Get input posisi dari pengguna
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Masukkan posisi pelamar (Staff/Officer/Supervisor/Manager): ");
+		String posisi = scanner.nextLine().toLowerCase();
+
+		// Cek posisi
+		if (validasiPosisi(posisi)) {
+			// Mengambil input umur dari pengguna
+			System.out.print("Masukkan umur pelamar: ");
+			int umurPelamar = scanner.nextInt();
+
+			// Cek kriteria umur berdasarkan posisi
+			boolean umurDiterima = periksaKriteriaUmur(posisi, umurPelamar);
+
+			if (umurDiterima) {
+				System.out.println("Pelamar diterima dalam kriteria umur untuk posisi " + capitalize(posisi));
+			} else {
+				System.out.println("Pelamar tidak memenuhi kriteria umur untuk posisi " + capitalize(posisi));
+			}
+		} else {
+			System.out.println("Posisi yang dimasukkan tidak valid.");
+			System.out.print("Masukkan ulang umur pelamar: ");
+			posisi = scanner.nextLine().toLowerCase();
+		}
+	}
+
+	public static boolean periksaKriteriaUmur(String posisi, int umurPelamar) {
+		switch (posisi) {
+		case "staff":
+			return umurPelamar <= 26;
+		case "officer":
+			return umurPelamar <= 31;
+		case "supervisor":
+			return umurPelamar <= 36;
+		case "manager":
+			return umurPelamar <= 41;
+		default:
+			return false;
+		}
+	}
+
+	public static boolean validasiPosisi(String posisi) {
+		return posisi.equalsIgnoreCase("staff") || posisi.equalsIgnoreCase("officer")
+				|| posisi.equalsIgnoreCase("supervisor") || posisi.equalsIgnoreCase("manager");
+	}
+
+	public static String capitalize(String str) {
+		return str.substring(0, 1).toUpperCase() + str.substring(1);
+	}
+}

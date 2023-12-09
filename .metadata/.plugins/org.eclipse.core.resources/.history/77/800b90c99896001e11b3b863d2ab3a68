@@ -1,0 +1,57 @@
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Scanner;
+
+public class LamaranPekerjaan {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input tahun lahir pelamar
+        int yearOfBirth;
+        do {
+            System.out.print("Masukkan tahun lahir pelamar (yyyy): ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Input tidak valid. Mohon masukkan tahun lahir yang valid.");
+                scanner.next(); // clear buffer
+            }
+            yearOfBirth = scanner.nextInt();
+        } while (yearOfBirth <= 0 || yearOfBirth > LocalDate.now().getYear());
+
+        // Hitung umur pelamar
+        int currentYear = LocalDate.now().getYear();
+        int age = currentYear - yearOfBirth;
+
+        // Input posisi pelamar
+        String posisi;
+        do {
+            System.out.print("Masukkan posisi pelamar (Staff/Officer/Supervisor/Manager): ");
+            posisi = scanner.next().toLowerCase();
+        } while (!posisi.equals("staff") && !posisi.equals("officer") && !posisi.equals("supervisor") && !posisi.equals("manager"));
+
+        // Tentukan batas umur
+        int batasUmur = 0;
+        switch (posisi) {
+            case "staff":
+                batasUmur = 25;
+                break;
+            case "officer":
+                batasUmur = 30;
+                break;
+            case "supervisor":
+                batasUmur = 35;
+                break;
+            case "manager":
+                batasUmur = 40;
+                break;
+        }
+
+        // Pengecekan umur
+        if (age <= batasUmur) {
+            System.out.println("Selamat, Anda memenuhi kriteria umur untuk posisi " + posisi);
+        } else {
+            System.out.println("Maaf, umur Anda melebihi batas untuk posisi " + posisi);
+        }
+
+        scanner.close();
+    }
+}
